@@ -7,26 +7,10 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
-    "hmr": "ng serve --configuration=hmr --open",
-    "build-demo": "ng build --prod --build-optimizer --configuration=demo",
-    "test": "ng test",
-    "e2e": "ng e2e",
-    "lint-staged": "lint-staged",
-    "prettier": "prettier --write \"src/**/*.{ts,scss,less}\"",
-    "tslint": "tslint \"src/**/*.{ts}\"",
-    "stylelint": "stylelint \"src/**/*.{scss,less}\"",
-    "postinstall": "ngcc",
-    "electron-r": "ng build --base-href ./",
-    "build-electron-win": "electron-packager ./ --platform=win32 --arch=ia32 --overwrite --asar --icon=src/assets/images/256_Biz1pos.ico",
-    "assemble": "npm version patch && npm run electron-r && npm run build-electron-win && npm run gen",
-    "reassemble": "npm run electron-r && npm run build-electron-win && npm run gen",
-    "start:electron": "ng build --base-href ./ && electron .",
-    "run:electron": "electron .",
-    "gen": "node gen.js",
-    "build": "electron-packager . --out=dist --asar --overwrite --all",
-    "build-installer": "electron-builder",
-    "setup": "electron-installer-windows --src Biz1Pos/ --dest installers/ --icon src/assets/images/256_Biz1pos.ico"
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "husky": {
     "hooks": {
