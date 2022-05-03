@@ -26,7 +26,7 @@
               "@ant-design/icons-angular/icons"
             ],
             "aot": true,
-            "outputPath": "dist",
+            "outputPath": "dist/biz1pos-bizdom",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
