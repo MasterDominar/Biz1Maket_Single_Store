@@ -29,12 +29,17 @@ export class AddproductComponent implements OnInit {
   CompanyId: any
 
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.printersettings = data['printersettings'][0]
-      this.CompanyId = this.loginfo.companyId
-      this.getprod()
-    })
+    const user = JSON.parse(localStorage.getItem("user"))
+    // const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    // this.StoreId = user.storeid
+
+    // this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.printersettings = data['printersettings'][0]
+    //   this.CompanyId = this.CompanyId
+    this.getprod()
+    // })
   }
 
   prod: any
@@ -46,7 +51,7 @@ export class AddproductComponent implements OnInit {
   }
 
   addprod() {
-    this.product.CompanyId = this.loginfo.companyId
+    this.product.CompanyId = this.CompanyId
     this.Auth.getneededproduct(this.product).subscribe(data => {
       this.prod = data["needProducts"]
       console.log(data)
@@ -58,7 +63,7 @@ export class AddproductComponent implements OnInit {
   }
 
   getprod() {
-    this.Auth.GetNeededProd(this.loginfo.companyId).subscribe(data => {
+    this.Auth.GetNeededProd(this.CompanyId).subscribe(data => {
       this.prods = data
       console.log(this.prods)
     })
@@ -67,7 +72,7 @@ export class AddproductComponent implements OnInit {
   getprodlist: any
   deleteitem(Id) {
     console.log('delete', Id)
-    this.Auth.deleteproduct({ id: Id, CompanyId: this.loginfo.companyId }).subscribe(data => {
+    this.Auth.deleteproduct({ id: Id, CompanyId: this.CompanyId }).subscribe(data => {
       this.getprodlist = data
       this.getprod()
     })
@@ -131,14 +136,14 @@ export class AddproductComponent implements OnInit {
             </tr>
         </thead>
         <tbody>`
-         this.prods.forEach(item => {
-         element =
-         element +
-         `<tr><td style="width: 100px;">${item.name}</td></tr>`
-          })
-          element =
-          element +
-       `</tbody>
+    this.prods.forEach(item => {
+      element =
+        element +
+        `<tr><td style="width: 100px;">${item.name}</td></tr>`
+    })
+    element =
+      element +
+      `</tbody>
     </table>
     <hr>
 </div>

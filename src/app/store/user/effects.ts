@@ -45,6 +45,7 @@ export class UserEffects implements OnInitEffects {
               response.loggedin =true;
               this.globals.email = payload.email;
               this.globals.emit(response)
+              localStorage.setItem("stores", JSON.stringify(response["stores"]))
               this.notification.success('Logged In', 'You have successfully logged in!')
               // return this.router.navigate([this.route.snapshot.queryParams.returnUrl])
               return new UserActions.LoadCurrentAccount()

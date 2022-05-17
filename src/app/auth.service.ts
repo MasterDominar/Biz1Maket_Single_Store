@@ -434,8 +434,8 @@ export class AuthService {
   prdactive(Id, active) {
     return this.http.get(this.base_url1 + 'Product/UpdateAct?Id=' + Id + '&active=' + active)
   }
-  getProduct(id, compId) {
-    return this.http.get(this.base_url1 + 'Product/GetById?id=' + id + '&compId=' + compId)
+  getProduct(id, compId, fromdate, todate) {
+    return this.http.get(this.base_url1 + 'Product/GetById?id=' + id + '&compId=' + compId + '&fromdate=' + fromdate + '&todate=' + todate)
   }
   saveorderdb(order) {
     return this.http.post(this.server_ip + ':8081/saveorderdb', { order: order })
@@ -830,6 +830,22 @@ export class AuthService {
     return this.http.get(
       this.base_url1 +
       'Daywise/GetCataWise?Storeid=' + Storeid + '&fromdate=' + fromdate + '&todate=' + todate + '&Companyid=' + Companyid)
+  }
+
+  refund(data) {
+    return this.http.post(this.base_url1 + 'Receipt/Pay', data)
+  }
+  Updatestockbatch(data) {
+    return this.http.post(this.base_url1 + 'Product/Updatestockbatch', data)
+  }
+
+  updatestockbatchdb(data) {
+    return this.http.post(this.dburl + 'updatestock', data)
+  }
+  getstockbatch(fromdate, todate, Storeid, Companyid) {
+    return this.http.get(
+      this.base_url1 +
+      'Product/getstockbatch?Storeid=' + Storeid + '&fromdate=' + fromdate + '&todate=' + todate + '&Companyid=' + Companyid)
   }
 
 }

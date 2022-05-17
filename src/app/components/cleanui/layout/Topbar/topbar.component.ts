@@ -16,17 +16,22 @@ export class TopbarComponent {
   }
 
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.CompanyId = this.loginfo.CompanyId
-      this.StoreId = this.loginfo.StoreId
-      console.log(this.loginfo)
-      // this.sync()
-    })
+    const user = JSON.parse(localStorage.getItem("user"))
+    const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    this.StoreId = user.storeid
+
+    // this.Auth.getdbdata(['loginfo']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.CompanyId = this.loginfo.CompanyId
+    //   this.StoreId = this.loginfo.StoreId
+    //   console.log(this.loginfo)
+    //   // this.sync()
+    // })
   }
 
   sync() {
-    this.Auth.getstoredata(this.loginfo.companyId, this.loginfo.storeId, 1).subscribe(data1 => {
+    this.Auth.getstoredata(this.CompanyId, this.StoreId, 1).subscribe(data1 => {
       console.log(data1)
       this.Auth.getstoredatadb(data1).subscribe(d => {
         this.router.navigateByUrl('/auth/pinscreen')

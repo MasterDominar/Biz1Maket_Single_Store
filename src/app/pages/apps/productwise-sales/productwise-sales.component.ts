@@ -22,12 +22,17 @@ export class ProductwiseSalesComponent implements OnInit {
   enddate: string
 
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.CompanyId = this.loginfo.companyId
-      this.StoreId = this.loginfo.storeId
-      console.log(this.loginfo)
-    })
+    const user = JSON.parse(localStorage.getItem("user"))
+    const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    this.StoreId = user.storeid
+
+    // this.Auth.getdbdata(['loginfo']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.CompanyId = this.loginfo.companyId
+    //   this.StoreId = this.loginfo.storeId
+    //   console.log(this.loginfo)
+    // })
     this.strdate = moment().format('YYYY-MM-DD')
     this.enddate = moment().format('YYYY-MM-DD')
     this.getprodwise()

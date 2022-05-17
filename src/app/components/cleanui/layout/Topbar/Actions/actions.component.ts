@@ -18,13 +18,13 @@ export class TopbarActionsComponent {
   ) {
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
       if(this.stockchnageid != state.stockchnageid) {
-        this.getproducts()
+        // this.getproducts()
       }
     })
   }
 
   ngOnInit(): void {
-    this.getproducts()
+    // this.getproducts()
   }
 
   products: any = []

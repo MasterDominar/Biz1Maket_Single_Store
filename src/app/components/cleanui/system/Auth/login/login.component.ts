@@ -93,14 +93,17 @@ export class LoginComponent implements OnInit {
     )
   }
   getusers(id) {
+    const store = this.stores.filter(x => x.id == id)[0]
     this.Auth.getusers(id, this.companyId).subscribe(data => {
       console.log(data)
-      this.Auth.getstoredata(this.companyId, id, 1).subscribe(data1 => {
-        console.log(data1)
-        this.Auth.getstoredatadb(data1).subscribe(d => {})
-      })
-      localStorage.setItem('users', JSON.stringify(data))
+      // this.Auth.getstoredata(this.companyId, id, 1).subscribe(data1 => {
+      //   console.log(data1)
+      //   this.Auth.getstoredatadb(data1).subscribe(d => {})
+      // })
+
+      localStorage.setItem('users', JSON.stringify([{ ...data[0], storeid: id }]))
       localStorage.setItem("logState", "logged_in")
+      // localStorage.setItem("store", )
       this.router.navigate(['/auth/pinscreen'])
     })
   }

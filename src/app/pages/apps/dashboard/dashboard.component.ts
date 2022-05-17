@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
   totalCustomers: number = 0
   oldCustomer: number = 0
   newcustomer: number = 0
-  prodfromdate : string = moment().format("YYYY-MM-DD")
-  prodtodate :  string = moment().format("YYYY-MM-DD")
+  prodfromdate: string = moment().format("YYYY-MM-DD")
+  prodtodate: string = moment().format("YYYY-MM-DD")
   dateRange = []
 
 
@@ -134,15 +134,20 @@ export class DashboardComponent implements OnInit {
   }
   loginfo
   CompanyId: any
-  StoreId: any
+  StoreId: number = 0
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo', 'orderkeydb', 'printersettings']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.printersettings = data['printersettings'][0]
-      this.CompanyId = this.loginfo.companyId
-      this.StoreId = this.loginfo.storeId
-      this.getData()
-    })
+    const user = JSON.parse(localStorage.getItem("user"))
+    const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    this.StoreId = user.storeid
+    this.getDashBoard()
+    // this.Auth.getdbdata(['loginfo', 'orderkeydb', 'printersettings']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.printersettings = data['printersettings'][0]
+    //   this.CompanyId = this.loginfo.companyId
+    //   this.StoreId = this.loginfo.storeId
+    //   this.getData()
+    // })
 
   }
 
@@ -159,7 +164,7 @@ export class DashboardComponent implements OnInit {
   }
   prodwisesales = []
   getDashBoard() {
-    this.Auth.getDashboard(this.storeId, this.companyId, this.fromDate, this.toDate, this.toDay, this.prodfromdate, this.prodtodate).subscribe(data => {
+    this.Auth.getDashboard(this.StoreId, this.CompanyId, this.fromDate, this.toDate, this.toDay, this.prodfromdate, this.prodtodate).subscribe(data => {
       console.log(data);
       this.chartData.datasets[0].data[0] = data["customerData"][0]["newCustomers"]
       this.chartData.datasets[0].data[1] = data["customerData"][0]["oldCustomers"]
@@ -181,15 +186,15 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  getData() {
-    this.Auth.getloginfo().subscribe(data => {
-      this.companyId = data["companyId"]
-      this.storeId = data["storeId"]
-      this.getDashBoard()
-      this.stores()
-      this.accounts()
-    })
-  }
+  // getData() {
+  //   this.Auth.getloginfo().subscribe(data => {
+  //     this.companyId = data["companyId"]
+  //     this.storeId = data["storeId"]
+  //     this.getDashBoard()
+  //     this.stores()
+  //     this.accounts()
+  //   })
+  // }
   store: any
   stores() {
     this.Auth.getstores(this.loginfo.companyId).subscribe(data => {

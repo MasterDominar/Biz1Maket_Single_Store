@@ -11,7 +11,7 @@ import { PrintService } from 'src/app/services/print/print.service'
 })
 export class PaymenttypesComponent implements OnInit {
 
-  constructor(private Auth: AuthService, private printservice: PrintService,) { }
+  constructor(private Auth: AuthService,private printservice: PrintService,) { }
   trans: any
   strdate: string
   enddate: string
@@ -26,24 +26,29 @@ export class PaymenttypesComponent implements OnInit {
   paymenttype: any = [];
 
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.printersettings = data['printersettings'][0]
-      this.CompanyId = this.loginfo.companyId
-      this.StoreId = this.loginfo.storeId
-      console.log(this.loginfo)
-      this.strdate = moment().format('YYYY-MM-DD')
-      this.enddate = moment().format('YYYY-MM-DD')
-      this.gettransrpt()
-    })
+    const user = JSON.parse(localStorage.getItem("user"))
+    const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    this.StoreId = user.storeid
+
+    // this.Auth.getdbdata(['loginfo','printersettings']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.printersettings = data['printersettings'][0]
+    //   this.CompanyId = this.CompanyId
+    //   this.StoreId = this.loginfo.storeId
+    //   console.log(this.loginfo)
+    //   this.strdate = moment().format('YYYY-MM-DD')
+    //   this.enddate = moment().format('YYYY-MM-DD')
+    //   this.gettransrpt()
+    // })
 
 
   }
 
   gettransrpt() {
-    this.Auth.GetTrans(this.strdate, this.enddate, this.loginfo.storeId, this.loginfo.companyId).subscribe(data => {
+    this.Auth.GetTrans(this.strdate, this.enddate, this.StoreId, this.CompanyId).subscribe(data => {
       this.trans = data
-      this.storepayment = data['pos_transactions'];
+      this.storepayment = data['transactions'];
       this.transpayment = [];
       console.log(this.trans);
       console.log(this.transpayment)
@@ -53,7 +58,7 @@ export class PaymenttypesComponent implements OnInit {
   gettranstype(sourceid, ptypeid, transaction) {
     this.transaction = transaction
     console.log(sourceid, ptypeid, transaction)
-    this.Auth.GetTransType(this.strdate, this.enddate, this.loginfo.storeId, this.loginfo.companyId, ptypeid, sourceid).subscribe(data => {
+    this.Auth.GetTransType(this.strdate, this.enddate, this.StoreId, this.CompanyId, ptypeid, sourceid).subscribe(data => {
       this.transpayment = data['transactions'];
       this.paymenttype = data["paymenttypes"]
       console.log(this.transaction);
