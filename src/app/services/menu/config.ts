@@ -33,12 +33,12 @@ export const getMenuData: any[] = [
   //   icon: 'fe fe-layers',
   //   url: '/apps/batchentry',
   // },
-  // {
-  //   title: 'Stock',
-  //   key: 'appsSetting',
-  //   icon: 'fe fe-shopping-bag',
-  //   url: '/apps/Stock',
-  // },
+  {
+    title: 'Stock',
+    key: 'appsSetting',
+    icon: 'fe fe-shopping-bag',
+    url: '/apps/Stock',
+  },
   // {
   //   title: 'Product',
   //   key: 'appsProfile',

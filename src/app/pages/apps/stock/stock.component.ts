@@ -56,14 +56,21 @@ export class StockComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
-      this.loginfo = data['loginfo'][0]
-      this.printersettings = data['printersettings'][0]
-      this.CompanyId = this.loginfo.companyId
-      this.StoreId = this.loginfo.storeId
-      this.sync.sync()
-      this.getproducts()
-    })
+
+    const user = JSON.parse(localStorage.getItem("user"))
+    const store = JSON.parse(localStorage.getItem("store"))
+    this.CompanyId = user.companyId
+    this.StoreId = user.storeid
+    this.getproducts()
+
+    // this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
+    //   this.loginfo = data['loginfo'][0]
+    //   this.printersettings = data['printersettings'][0]
+    //   this.CompanyId = this.loginfo.companyId
+    //   this.StoreId = this.loginfo.storeId
+    //   this.sync.sync()
+    //
+    // })
   }
 
   onChange(result: Date): void {
@@ -75,7 +82,7 @@ export class StockComponent implements OnInit {
 
 
   getproducts() {
-    this.Auth.getstockbatch(this.strdate, this.enddate, this.loginfo.storeId, this.loginfo.companyId).subscribe(data => {
+    this.Auth.getstockbatch(this.strdate, this.enddate, this.StoreId, this.CompanyId).subscribe(data => {
       this.products = data
       this.prod = this.products
       console.log(this.products)

@@ -28,8 +28,8 @@
       <!-- <button class="btn btn-primary" (click)="electronPrint()"
         style="height: fit-content;margin-top: 19px;margin-right: 31px;">Print</button> -->
 
-      <button class="btn btn-success" (click)="saveBatch()"
-        style="height: fit-content;margin-top: 19px;margin-left: 5px;">Save</button>
+      <!-- <button class="btn btn-success" (click)="saveBatch()"
+        style="height: fit-content;margin-top: 19px;margin-left: 5px;">Save</button> -->
 
     </div>
     <nz-table #basicTable class="kit__utils__table mb-4" nzSize="small" [nzData]="prod">
@@ -79,7 +79,7 @@
 
           <td style="width: 0px">
 
-            <input type="number" class="form-control" style="width: 74px;" [(ngModel)]="product.quantity">
+            {{product.quantity}}
 
           </td>
 
