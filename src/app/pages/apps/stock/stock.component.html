@@ -12,6 +12,18 @@
           <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
         </ng-template>
       </div>
+
+      <div>
+        <input class="form-control" placeholder="Select Category" [(ngModel)]="inputValue" (input)="onInputAutocomplete()"
+          [nzAutocomplete]="auto" style="margin-top: 24px;" />
+        <nz-autocomplete nzBackfill #auto (selectionChange)="setcategory($event);">
+          <nz-auto-option id="{{category.id}}" *ngFor="let category of filterproduct" [nzValue]="category.description">
+            {{ category.description }}
+          </nz-auto-option>
+        </nz-autocomplete>
+      </div>
+
+
       <div class="col-xl-4" style="margin-top: 25px;">
         <nz-range-picker style="width: inherit;" [(ngModel)]="dateRange" (ngModelChange)="onChange($event)">
         </nz-range-picker>
@@ -21,15 +33,11 @@
         <input type="checkbox" style=" width: 18px; height: calc(1.5em + 0.75rem + 2px);"
           (change)="changefilter($event.target.checked)">
       </div>
-
-      <!-- Master -->
-      <!-- Hide for Website -->
-
       <!-- <button class="btn btn-primary" (click)="electronPrint()"
-        style="height: fit-content;margin-top: 19px;margin-right: 31px;">Print</button> -->
+        style="height: fit-content;margin-top: 19px;margin-right: 31px;">Print</button>
 
-      <!-- <button class="btn btn-success" (click)="saveBatch()"
-        style="height: fit-content;margin-top: 19px;margin-left: 5px;">Save</button> -->
+      <button class="btn btn-success" (click)="saveBatch()"
+        style="height: fit-content;margin-top: 19px;margin-left: 5px;">save</button> -->
 
     </div>
     <nz-table #basicTable class="kit__utils__table mb-4" nzSize="small" [nzData]="prod">
@@ -43,6 +51,11 @@
           <th style="text-align: center;">
             <strong>
               Entry Date
+            </strong>
+          </th>
+          <th style="text-align: center;">
+            <strong>
+              Category
             </strong>
           </th>
 
@@ -74,17 +87,19 @@
           </td>
 
           <td>
+            {{product.category}}
+
+          </td>
+
+          <td>
             &#8377; {{product.price}}
           </td>
 
           <td style="width: 0px">
-
             {{product.quantity}}
+            <!-- <input type="number" class="form-control" style="width: 74px;" [(ngModel)]="product.quantity"> -->
 
           </td>
-
-
-
           <td>
             {{product.barCode}}
           </td>

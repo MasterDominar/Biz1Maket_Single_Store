@@ -51,6 +51,9 @@ export class StockComponent implements OnInit {
   date: { year: number; month: number }
   dateRange = []
   daterangemonth = []
+  categories: any
+  filterproduct = [];
+  prodFilters: Array<{ key: string; value: any | any[] }> = [];
 
 
 
@@ -62,6 +65,7 @@ export class StockComponent implements OnInit {
     this.CompanyId = user.companyId
     this.StoreId = user.storeid
     this.getproducts()
+    this.getcategory()
 
     // this.Auth.getdbdata(['loginfo', 'printersettings']).subscribe(data => {
     //   this.loginfo = data['loginfo'][0]
@@ -80,12 +84,32 @@ export class StockComponent implements OnInit {
     this.getproducts()
   }
 
+  onInputAutocomplete() {
+    console.log(this.filterproduct);
+    this.filterproduct = this.categories.filter(x => x.description.toLowerCase().includes(this.inputValue));
+
+  }
+
+  setcategory(e) {
+    console.log(e); //nzValue
+    console.log(e.element.nativeElement.id); //nzValue
+    this.prod = this.products.filter(x => x.categoryId == +e.element.nativeElement.id)
+  }
+  getcategory() {
+    this.Auth.getcategories(this.CompanyId, 'A').subscribe(data => {
+      this.categories = data;
+      console.log(this.categories)
+
+    })
+  }
+
 
   getproducts() {
     this.Auth.getstockbatch(this.strdate, this.enddate, this.StoreId, this.CompanyId).subscribe(data => {
       this.products = data
       this.prod = this.products
       console.log(this.products)
+      this.changefilter(false)
     })
   }
 
@@ -110,7 +134,7 @@ export class StockComponent implements OnInit {
     if (bool) {
       this.prod = this.products.filter(x => x.quantity < 6)
     } else {
-      this.prod = this.products.filter(x => x.quantity)
+      this.prod = this.products.filter(x => x.quantity > 0)
 
     }
     console.log(this.prod.length)
